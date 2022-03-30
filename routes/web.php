@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProjectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route views controller for the home page
+
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+Route::get('/resume', [HomeController::class,'resume'])->name('resume');
+
+Route::get('/project', [HomeController::class, 'projects'])->name('project');
+
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
+
+
+//Route views controller for the projects page
+
+Route::resource('/projects', ProjectController::class);
+
+
+Route::post('/projects', [ProjectController::class, 'status'])->name('projects-status');
+
+//Route for logged in users
+Auth::routes();
+
+Route::get('/home', [HomeController::class, 'index'])->name('home');
